@@ -65,7 +65,7 @@
 3. **Grafana Intuitiveness**: Run the steps mentioned in the above section to get the app and Grafana dashboard running. Use the `dashboard.json` to get the live plots to evaluate them on the basis of plotting commandments. The dashboard includes Current App Status, Number of active requests being processed, Throughput, Latency and CPU Usage.
 4. **Application Logic**: The streamlit app loads the model once and stores it in cache to avoid redundant model loading costs for every image. It can handle single and multiple image uploads without crashing. In the rare event that it is not able to store all of the images in the memory together, it gracefully throws an error without crashing.
 
-Apart from the above, the video recording of the entire working demo is available [here]()
+Apart from the above, the video recording of the entire working demo is available [here](https://drive.google.com/file/d/1yxwfo75Z38obg1U4tbiEB2DvJO2-u_IV/view)
 
 ## LLM Usage Disclosure
 Gemini was used to write the code for `app.py` and `dummy_requests.py` since I did not know the syntax and working of streamlit.  
