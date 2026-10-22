@@ -4,8 +4,8 @@ from PIL import Image, UnidentifiedImageError
 from prometheus_client import Counter, Gauge, Histogram, Summary, start_http_server, disable_created_metrics
 from transformers import BlipProcessor, BlipForConditionalGeneration
 
-st.set_page_config(page_title="CPU Image Captioning", page_icon="🖼️", layout="wide")
-st.title("CPU Image Captioning with Prometheus")
+st.set_page_config(page_title="Image Captioning Application", page_icon="🖼️", layout="wide")
+st.title("Image Captioning Application")
 disable_created_metrics()
 
 @st.cache_resource
@@ -38,7 +38,7 @@ def process(image, mode):
     M["active"].inc()
     try:
         with torch.inference_mode():
-            inputs = processor(images=image.convert("RGB"), return_tensors="pt")
+            inputs = processor(images=image.convert("RGB"), return_tensors="pt", max_new_tokens=20)
             return processor.decode(model.generate(**inputs)[0], skip_special_tokens=True)
     finally:
         duration = time.perf_counter() - start
@@ -56,7 +56,9 @@ if mode == "Single":
     if file:
         try:
             image = Image.open(file).convert("RGB")
-            st.image(image, width='content')
+            target_width = int(image.width * 300 / image.height)
+            image = image.resize((target_width, 300))
+            st.image(image, width=target_width)
             if st.button("Generate Caption", type="primary"):
                 try:
                     caption = process(image, mode)
